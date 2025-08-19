@@ -9,6 +9,23 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <title>DX Dice Roller</title>
+    <!-- Tailwind Play CDN (빠른 적용용) -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  // 선택: 색상 프리셋(인디고/보라 계열 강조)
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          indigo: tailwind.colors.indigo,
+          violet: tailwind.colors.violet,
+          slate: tailwind.colors.slate,
+        }
+      }
+    }
+  }
+</script>
+
   </head>
   <body>
     <div id="root"></div>
