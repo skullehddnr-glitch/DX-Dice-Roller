@@ -138,11 +138,10 @@ export default function App() {
       <div className="max-w-5xl mx-auto space-y-6">
         {/* 헤더 */}
         <header className="flex items-center justify-between rounded-2xl p-4 md:p-6 bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-md">
-          <h1 className="text-2xl md:text-3xl font-bold flex items-center gap-3">
-            <span className="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-white/20 backdrop-blur-sm">🎲</span>
+          <h1 className="text-2xl md:text-3xl font-bold flex items-center gap-3"
             Double Cross Dice Roller
           </h1>
-          <div className="text-sm opacity-90">크리티컬 하한: <b>2</b></div>
+      
         </header>
 
         {/* 입력 섹션 */}
