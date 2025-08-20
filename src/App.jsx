@@ -35,9 +35,11 @@ function rollDamage(achievement) {
 
 export default function App() {
   const [command, setCommand] = useState("");
+  const [achievementInput, setAchievementInput] = useState("");
   const [result, setResult] = useState(null);
 
-  const handleSubmit = (e) => {
+  // 명령어 입력 처리
+  const handleCommandSubmit = (e) => {
     e.preventDefault();
     const match = command.match(/(\d+)dx(\d+)([+-]\d+)?/i);
     if (!match) {
@@ -55,18 +57,30 @@ export default function App() {
     setResult({ ...roll, damage });
   };
 
+  // 직접 달성치 입력 처리
+  const handleAchievementSubmit = (e) => {
+    e.preventDefault();
+    const value = parseInt(achievementInput, 10);
+    if (isNaN(value)) {
+      setResult({ error: "달성치는 숫자로 입력해야 합니다." });
+      return;
+    }
+    const damage = rollDamage(value);
+    setResult({ total: value, log: [`직접 입력 달성치: ${value}`], damage });
+  };
+
   return (
     <div className="min-h-screen w-full bg-gradient-to-b from-slate-50 to-indigo-50 text-slate-900 p-4 md:p-6">
       <div className="max-w-5xl mx-auto space-y-6">
-        {/* 헤더 (이모지 및 크리티컬 하한 제거됨) */}
+        {/* 헤더 */}
         <header className="rounded-2xl p-4 md:p-6 bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-md">
           <h1 className="text-2xl md:text-3xl font-bold">
             Double Cross Dice Roller
           </h1>
         </header>
 
-        {/* 입력 폼 */}
-        <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-md p-6 space-y-4">
+        {/* 명령어 입력 */}
+        <form onSubmit={handleCommandSubmit} className="bg-white rounded-2xl shadow-md p-6 space-y-4">
           <label className="block text-lg font-medium text-slate-700">
             주사위 명령어 입력
           </label>
@@ -81,7 +95,27 @@ export default function App() {
             type="submit"
             className="w-full py-2 px-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg shadow-md transition"
           >
-            굴리기
+            명령어로 굴리기
+          </button>
+        </form>
+
+        {/* 직접 달성치 입력 */}
+        <form onSubmit={handleAchievementSubmit} className="bg-white rounded-2xl shadow-md p-6 space-y-4">
+          <label className="block text-lg font-medium text-slate-700">
+            직접 달성치 입력
+          </label>
+          <input
+            type="number"
+            value={achievementInput}
+            onChange={(e) => setAchievementInput(e.target.value)}
+            placeholder="예: 37"
+            className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-violet-500"
+          />
+          <button
+            type="submit"
+            className="w-full py-2 px-4 bg-violet-600 hover:bg-violet-700 text-white rounded-lg shadow-md transition"
+          >
+            달성치로 데미지 굴리기
           </button>
         </form>
 
@@ -92,18 +126,13 @@ export default function App() {
               <p className="text-red-500 font-semibold">{result.error}</p>
             ) : (
               <>
-                <h2 className="text-xl font-bold text-indigo-700">명중 굴림 결과</h2>
+                <h2 className="text-xl font-bold text-indigo-700">명중 / 입력 결과</h2>
                 <ul className="space-y-1 text-slate-800">
                   {result.log.map((line, i) => (
                     <li key={i}>{line}</li>
                   ))}
                 </ul>
-                <p className="font-bold mt-2">
-                  최종 달성치: {result.total}
-                  {result.modifier !== 0 && (
-                    <span className="text-slate-500"> (보정 포함)</span>
-                  )}
-                </p>
+                <p className="font-bold mt-2">최종 달성치: {result.total}</p>
 
                 <h2 className="text-xl font-bold text-violet-700 mt-4">데미지 굴림 결과</h2>
                 <p>
