@@ -138,7 +138,7 @@ export default function App() {
       <div className="max-w-5xl mx-auto space-y-6">
         {/* 헤더 */}
         <header className="flex items-center justify-between rounded-2xl p-4 md:p-6 bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-md">
-          <h1 className="text-2xl md:text-3xl font-bold flex items-center gap-3"
+          <h1 className="text-2xl md:text-3xl font-bold flex items-center gap-3"></h1>
             Double Cross Dice Roller
           </h1>
       
